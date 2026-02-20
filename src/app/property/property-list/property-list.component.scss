@@ -78,17 +78,6 @@
     }
   }
 
-  .badge-active {
-    display: inline-block;
-    padding: 0.2rem 0.6rem;
-    border-radius: 6px;
-    font-size: 0.75rem;
-    font-weight: 500;
-    background: rgba(74, 222, 128, 0.1);
-    color: var(--success);
-    border: 1px solid rgba(74, 222, 128, 0.2);
-    width: fit-content;
-  }
 
   .card-actions {
     display: flex;
