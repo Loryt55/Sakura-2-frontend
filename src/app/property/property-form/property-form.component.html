@@ -1,0 +1,30 @@
+<form (ngSubmit)="onSubmit()">
+  <label>
+    Name:
+    <input type="text" [(ngModel)]="form.name" name="name" required />
+  </label>
+
+  <label>
+    Address:
+    <input type="text" [(ngModel)]="form.address" name="address" required />
+  </label>
+
+  <label>
+    City:
+    <input type="text" [(ngModel)]="form.city" name="city" required />
+  </label>
+
+  <label>
+    Rooms:
+    <input type="number" [(ngModel)]="form.rooms" name="rooms" min="1" />
+  </label>
+
+  <label>
+    Price per Month:
+    <input type="number" [(ngModel)]="form.pricePerMonth" name="pricePerMonth" min="0" />
+  </label>
+
+
+  <button type="submit">Save</button>
+  <button type="button" (click)="onCancel()">Cancel</button>
+</form>

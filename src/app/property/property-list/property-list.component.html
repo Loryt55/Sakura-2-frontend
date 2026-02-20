@@ -1,0 +1,29 @@
+<app-property-form
+  *ngIf="showForm"
+  [property]="editingProperty"
+  (save)="onSave($event)"
+  (cancel)="cancelEdit()"
+></app-property-form>
+
+<div class="actions">
+  <button (click)="addNew()">+ Add Property</button>
+</div>
+
+<div class="property-grid">
+  <div class="property-card" *ngFor="let prop of properties; trackBy: trackById">
+    <h3>{{ prop.name }}</h3>
+    <p>{{ prop.address }}, {{ prop.city }}</p>
+    <p>Rooms: {{ prop.rooms }} | Price: €{{ prop.pricePerMonth }}</p>
+
+    <div class="card-actions">
+      <button class="btn-edit"
+              (click)="edit(prop)">Edit</button>
+      <button class="btn-delete"
+              (click)="delete(prop.id)">Delete</button>
+    </div>
+  </div>
+
+  <div *ngIf="properties.length === 0" class="no-properties">
+    <p>No properties found.</p>
+  </div>
+</div>
