@@ -1,7 +1,7 @@
 import { Component, EventEmitter, Input, Output, OnChanges, SimpleChanges } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
-import { Property } from '../property/property.service';
+import {Property, PropertyForm} from '../property/property.service';
 
 @Component({
   selector: 'app-property-form',
@@ -12,10 +12,10 @@ import { Property } from '../property/property.service';
 })
 export class PropertyFormComponent implements OnChanges {
   @Input() property?: Property;
-  @Output() save = new EventEmitter<Omit<Property, 'id'| 'active'>>();
+  @Output() save = new EventEmitter<PropertyForm>();
   @Output() cancel = new EventEmitter<void>();
 
-  form: Omit<Property, 'id'| 'active'> = {
+  form: PropertyForm = {
     name: '',
     address: '',
     city: '',
@@ -25,8 +25,13 @@ export class PropertyFormComponent implements OnChanges {
 
   ngOnChanges(changes: SimpleChanges): void {
     if (changes['property'] && this.property) {
-      const { id, active, ...formData } = this.property;
-      this.form = formData;
+      this.form = {
+        name: this.property.name,
+        address: this.property.address,
+        city: this.property.city,
+        rooms: this.property.rooms,
+        pricePerMonth: this.property.pricePerMonth
+      };
     } else {
       this.form = {
         name: '',

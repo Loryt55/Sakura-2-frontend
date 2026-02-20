@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { Property, PropertyService } from '../property/property.service';
+import {Property, PropertyForm, PropertyService} from '../property/property.service';
 import { PropertyFormComponent } from '../property-form/property-form.component';
 import {CommonModule} from '@angular/common';
 
@@ -44,20 +44,9 @@ export class PropertyListComponent {
     this.editingProperty = undefined;
   }
 
-  onSave(data: Omit<Property, 'id'| 'active'>) {
+  onSave(formData: PropertyForm) {
     if (this.editingProperty) {
-      const updated: Property = {
-        ...this.editingProperty,
-        ...data
-      };
-      console.log('Property da aggiornare:', updated);
-
-      if (!updated.id) {
-        console.error('ID mancante! Non posso aggiornare.');
-        return; // blocca la chiamata se non c'è l'id
-      }
-
-      this.propertyService.updateProperty(updated).subscribe({
+      this.propertyService.updateProperty(this.editingProperty.id, formData).subscribe({
         next: () => {
           this.loadProperties();
           this.showForm = false;
@@ -65,7 +54,7 @@ export class PropertyListComponent {
         error: err => console.error(err)
       });
     } else {
-      this.propertyService.addProperty(data).subscribe({
+      this.propertyService.addProperty(formData).subscribe({
         next: () => {
           this.loadProperties();
           this.showForm = false;

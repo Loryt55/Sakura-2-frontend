@@ -11,6 +11,14 @@ export interface Property {
   pricePerMonth: number;
 }
 
+export interface PropertyForm {
+  name: string;
+  address: string;
+  city: string;
+  rooms: number;
+  pricePerMonth: number;
+}
+
 @Injectable({
   providedIn: 'root',
 })
@@ -23,12 +31,12 @@ export class PropertyService {
     return this.http.get<Property[]>(this.apiUrl);
   }
 
-  addProperty(property: Omit<Property, 'id'>): Observable<Property> {
+  addProperty(property: PropertyForm): Observable<Property> {
     return this.http.post<Property>(this.apiUrl, property);
   }
 
-  updateProperty(property: Property): Observable<Property> {
-    return this.http.put<Property>(`${this.apiUrl}/${property.id}`, property);
+  updateProperty(id: number, property: PropertyForm): Observable<Property> {
+    return this.http.put<Property>(`${this.apiUrl}/${id}`, property);
   }
 
   deleteProperty(id: number): Observable<void> {
