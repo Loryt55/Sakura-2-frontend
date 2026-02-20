@@ -7,10 +7,11 @@ import { PropertyListComponent } from './property/property-list/property-list.co
   imports: [PropertyListComponent],
   template: `
     <header>
-      <h1>Property Management</h1>
-      <button class="btn-toggle" (click)="toggleDarkMode()">Toggle Dark Mode</button>
+      <h1>Rental <span>Manager</span></h1>
+      <button class="btn-toggle" (click)="toggleDarkMode()">
+        {{ isDark ? '☀️ Light' : '🌙 Dark' }}
+      </button>
     </header>
-
     <main>
       <app-property-list></app-property-list>
     </main>
@@ -18,7 +19,10 @@ import { PropertyListComponent } from './property/property-list/property-list.co
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent {
+  isDark = false;
+
   toggleDarkMode() {
-    document.body.classList.toggle('dark-mode');
+    this.isDark = !this.isDark;
+    document.body.classList.toggle('dark-mode', this.isDark);
   }
 }

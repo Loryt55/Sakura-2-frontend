@@ -5,21 +5,26 @@
   (cancel)="cancelEdit()"
 ></app-property-form>
 
-<div class="actions">
-  <button (click)="addNew()">+ Add Property</button>
+<div class="list-header">
+  <h2>Properties</h2>
+  <button class="btn-add" (click)="addNew()">+ Add Property</button>
 </div>
 
 <div class="property-grid">
   <div class="property-card" *ngFor="let prop of properties; trackBy: trackById">
     <h3>{{ prop.name }}</h3>
-    <p>{{ prop.address }}, {{ prop.city }}</p>
-    <p>Rooms: {{ prop.rooms }} | Price: €{{ prop.pricePerMonth }}</p>
+    <p class="card-location">{{ prop.address }}, {{ prop.city }}</p>
+
+    <div class="card-meta">
+      <span class="tag">{{ prop.rooms }} rooms</span>
+      <span class="price">€{{ prop.pricePerMonth }}/mo</span>
+    </div>
+
+    <span class="badge-active">Active</span>
 
     <div class="card-actions">
-      <button class="btn-edit"
-              (click)="edit(prop)">Edit</button>
-      <button class="btn-delete"
-              (click)="delete(prop.id)">Delete</button>
+      <button class="btn-edit" (click)="edit(prop)">Edit</button>
+      <button class="btn-delete" (click)="delete(prop.id)">Delete</button>
     </div>
   </div>
 

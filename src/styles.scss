@@ -1,1 +1,54 @@
-/* You can add global styles to this file, and also import other style files */
+@import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600&family=DM+Mono:wght@400;500&display=swap');
+
+/* Tema LIGHT — default */
+:root {
+  --bg: #f4f4f8;
+  --surface: #ffffff;
+  --surface-hover: #f0f0f5;
+  --border: #e0e0ea;
+  --accent: #6c63ff;
+  --accent-hover: #857dff;
+  --danger: #e05555;
+  --success: #22a85a;
+  --text: #1a1a2e;
+  --text-muted: #7070a0;
+  --radius: 12px;
+  --shadow: 0 4px 24px rgba(0,0,0,0.08);
+}
+
+/* Tema DARK — attivo quando body ha classe dark-mode */
+body.dark-mode {
+  --bg: #0f0f13;
+  --surface: #1a1a24;
+  --surface-hover: #22222f;
+  --border: #2a2a3a;
+  --text: #e8e8f0;
+  --text-muted: #7070a0;
+  --shadow: 0 4px 24px rgba(0,0,0,0.4);
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: 'DM Sans', sans-serif;
+  background-color: var(--bg);
+  color: var(--text);
+  min-height: 100vh;
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+button {
+  font-family: 'DM Sans', sans-serif;
+  cursor: pointer;
+  border: none;
+  outline: none;
+  transition: all 0.2s ease;
+}
+
+input {
+  font-family: 'DM Sans', sans-serif;
+}
