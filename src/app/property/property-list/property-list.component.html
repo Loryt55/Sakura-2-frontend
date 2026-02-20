@@ -7,7 +7,10 @@
 
 <div class="list-header">
   <h2>Properties</h2>
-  <button class="btn-add" (click)="addNew()">+ Add Property</button>
+  <div class="header-actions">
+    <button class="btn-refresh" (click)="loadProperties()">↻ Refresh</button>
+    <button class="btn-add" (click)="addNew()">+ Add Property</button>
+  </div>
 </div>
 
 <div class="property-grid">
