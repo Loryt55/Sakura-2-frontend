@@ -1,19 +1,23 @@
 import { Component } from '@angular/core';
-import { PropertyListComponent } from './features/property/property-list/property-list.component';
+import {RouterLink, RouterLinkActive, RouterOutlet} from '@angular/router';
 
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [PropertyListComponent],
+  imports: [RouterOutlet, RouterLink, RouterLinkActive],
   template: `
     <header>
-      <h1>Rental <span>Manager</span></h1>
+      <h1>Sakura <span>Manager</span></h1>
+      <nav>
+        <a routerLink="/properties" routerLinkActive="active">Properties</a>
+        <a routerLink="/users" routerLinkActive="active">Users</a>
+      </nav>
       <button class="btn-toggle" (click)="toggleDarkMode()">
         {{ isDark ? '☀️ Light' : '🌙 Dark' }}
       </button>
     </header>
     <main>
-      <app-property-list></app-property-list>
+      <router-outlet></router-outlet>
     </main>
   `,
   styleUrls: ['./app.component.scss']
