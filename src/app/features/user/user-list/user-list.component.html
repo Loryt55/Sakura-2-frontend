@@ -1,0 +1,35 @@
+<app-user-form
+  *ngIf="showForm"
+  [user]="editingUser"
+  (save)="onSave($event)"
+  (cancel)="cancelEdit()"
+></app-user-form>
+
+<div class="list-header">
+  <h2>Users</h2>
+  <div class="header-actions">
+    <button class="btn-refresh" (click)="loadUsers()">↻ Refresh</button>
+    <button class="btn-add" (click)="addNew()">+ Add User</button>
+  </div>
+</div>
+
+<div class="user-grid">
+  <div class="user-card" *ngFor="let user of users; trackBy: trackById">
+    <h3>{{ user.firstName }} {{ user.lastName }}</h3>
+    <p class="card-email">{{ user.email }}</p>
+
+    <div class="card-meta">
+      <span class="tag">{{ user.roleName }}</span>
+      <span class="tag">{{ user.phoneNumber }}</span>
+    </div>
+
+    <div class="card-actions">
+      <button class="btn-edit" (click)="edit(user)">Edit</button>
+      <button class="btn-delete" (click)="delete(user.id)">Delete</button>
+    </div>
+  </div>
+
+  <div *ngIf="users.length === 0" class="no-users">
+    <p>No users found.</p>
+  </div>
+</div>
