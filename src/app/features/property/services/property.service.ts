@@ -1,23 +1,7 @@
-import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
-import { HttpClient } from '@angular/common/http';
-
-export interface Property {
-  id: number;
-  name: string;
-  address: string;
-  city: string;
-  rooms: number;
-  pricePerMonth: number;
-}
-
-export interface PropertyForm {
-  name: string;
-  address: string;
-  city: string;
-  rooms: number;
-  pricePerMonth: number;
-}
+import {Injectable} from '@angular/core';
+import {Observable} from 'rxjs';
+import {HttpClient} from '@angular/common/http';
+import {Property, PropertyForm} from '../../../core/models/property.model';
 
 @Injectable({
   providedIn: 'root',
@@ -25,7 +9,8 @@ export interface PropertyForm {
 export class PropertyService {
   private apiUrl = 'http://localhost:8080/api/properties';
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient) {
+  }
 
   getAllProperties(): Observable<Property[]> {
     return this.http.get<Property[]>(this.apiUrl);

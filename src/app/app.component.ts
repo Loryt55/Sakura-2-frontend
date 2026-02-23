@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { PropertyListComponent } from './property/property-list/property-list.component';
+import { PropertyListComponent } from './features/property/property-list/property-list.component';
 
 @Component({
   selector: 'app-root',

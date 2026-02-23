@@ -1,7 +1,8 @@
 import { Component, EventEmitter, Input, Output, OnChanges, SimpleChanges } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
-import {Property, PropertyForm} from '../property/property.service';
+import {Property, PropertyForm} from '../../../core/models/property.model';
+
 
 @Component({
   selector: 'app-property-form',

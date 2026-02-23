@@ -1,12 +1,13 @@
-import { Component } from '@angular/core';
-import {Property, PropertyForm, PropertyService} from '../property/property.service';
-import { PropertyFormComponent } from '../property-form/property-form.component';
+import {Component} from '@angular/core';
+import {PropertyFormComponent} from '../property-form/property-form.component';
 import {CommonModule} from '@angular/common';
+import {Property, PropertyForm} from '../../../core/models/property.model';
+import {PropertyService} from '../services/property.service';
 
 @Component({
   selector: 'app-property-list',
   standalone: true,
-  imports: [CommonModule,PropertyFormComponent],
+  imports: [CommonModule, PropertyFormComponent],
   templateUrl: './property-list.component.html',
   styleUrls: ['./property-list.component.scss']
 })
@@ -35,7 +36,7 @@ export class PropertyListComponent {
 
 
   edit(prop: Property) {
-    this.editingProperty = { ...prop };
+    this.editingProperty = {...prop};
     this.showForm = true;
   }
 
