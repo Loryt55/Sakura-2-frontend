@@ -16,3 +16,8 @@ export interface UserForm {
   password: string;
   roleId: number;
 }
+
+export interface Role {
+  id: number;
+  name: string;
+}

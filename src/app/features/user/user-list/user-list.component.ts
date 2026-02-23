@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import {User, UserForm} from '../../../core/models/user.model';
-import {UserService} from '../../property/services/user.service';
+import {UserService} from '../services/user.service';
 import {UserFormComponent} from '../user-form/user-form.component';
 
 @Component({
