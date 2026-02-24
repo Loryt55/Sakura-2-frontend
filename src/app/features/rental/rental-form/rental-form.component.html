@@ -1,0 +1,40 @@
+<div class="form-overlay">
+  <h3>{{ rental ? 'Edit Rental' : 'New Rental' }}</h3>
+
+  <form (ngSubmit)="onSubmit()">
+    <div class="form-group">
+      <label>Property</label>
+      <select [(ngModel)]="form.propertyId" name="propertyId" required>
+        <option [value]="0" disabled>Select a property</option>
+        <option *ngFor="let prop of properties" [value]="prop.id">
+          {{ prop.name }} — {{ prop.city }}
+        </option>
+      </select>
+    </div>
+
+    <div class="form-group">
+      <label>Tenant</label>
+      <select [(ngModel)]="form.userId" name="userId" required>
+        <option [value]="0" disabled>Select a tenant</option>
+        <option *ngFor="let tenant of tenants" [value]="tenant.id">
+          {{ tenant.firstName }} {{ tenant.lastName }}
+        </option>
+      </select>
+    </div>
+
+    <div class="form-group">
+      <label>Start Date</label>
+      <input type="date" [(ngModel)]="form.startDate" name="startDate" required />
+    </div>
+
+    <div class="form-group">
+      <label>End Date</label>
+      <input type="date" [(ngModel)]="form.endDate" name="endDate" required />
+    </div>
+
+    <div class="form-actions">
+      <button type="submit">Save</button>
+      <button type="button" (click)="onCancel()">Cancel</button>
+    </div>
+  </form>
+</div>

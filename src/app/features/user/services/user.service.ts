@@ -30,4 +30,8 @@ export class UserService {
   getOwners(): Observable<User[]> {
     return this.http.get<User[]>(`${this.apiUrl}/by-role/OWNER`);
   }
+
+  getTenants(): Observable<User[]> {
+    return this.http.get<User[]>(`${this.apiUrl}/by-role/TENANT`);
+  }
 }

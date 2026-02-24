@@ -11,6 +11,7 @@ import {RouterLink, RouterLinkActive, RouterOutlet} from '@angular/router';
       <nav>
         <a routerLink="/properties" routerLinkActive="active">Properties</a>
         <a routerLink="/users" routerLinkActive="active">Users</a>
+        <a routerLink="/rentals" routerLinkActive="active">Rentals</a>
       </nav>
       <button class="btn-toggle" (click)="toggleDarkMode()">
         {{ isDark ? '☀️ Light' : '🌙 Dark' }}

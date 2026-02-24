@@ -1,0 +1,36 @@
+<app-rental-form
+  *ngIf="showForm"
+  [rental]="editingRental"
+  (save)="onSave($event)"
+  (cancel)="cancelEdit()"
+></app-rental-form>
+
+<div class="list-header">
+  <h2>Rentals</h2>
+  <div class="header-actions">
+    <button class="btn-refresh" (click)="loadRentals()">↻ Refresh</button>
+    <button class="btn-add" (click)="addNew()">+ Add Rental</button>
+  </div>
+</div>
+
+<div class="rental-grid">
+  <div class="rental-card" *ngFor="let rental of rentals; trackBy: trackById">
+    <h3>{{ rental.propertyName }}</h3>
+    <p class="card-city">{{ rental.propertyCity }}</p>
+    <p class="card-tenant">Tenant: {{ rental.userFullName }}</p>
+
+    <div class="card-meta">
+      <span class="tag">{{ rental.startDate }} → {{ rental.endDate }}</span>
+      <span class="price">€{{ rental.totalPrice }}</span>
+    </div>
+
+    <div class="card-actions">
+      <button class="btn-edit" (click)="edit(rental)">Edit</button>
+      <button class="btn-delete" (click)="delete(rental.id)">Delete</button>
+    </div>
+  </div>
+
+  <div *ngIf="rentals.length === 0" class="no-rentals">
+    <p>No rentals found.</p>
+  </div>
+</div>
