@@ -17,6 +17,7 @@
   <div class="property-card" *ngFor="let prop of properties; trackBy: trackById">
     <h3>{{ prop.name }}</h3>
     <p class="card-location">{{ prop.address }}, {{ prop.city }}</p>
+    <p class="card-owner">Owner: {{ prop.ownerFullName }}</p>
 
     <div class="card-meta">
       <span class="tag">{{ prop.rooms }} rooms</span>

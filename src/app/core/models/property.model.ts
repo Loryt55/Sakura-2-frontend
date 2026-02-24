@@ -1,5 +1,6 @@
 export interface Property {
   id: number;
+  ownerFullName: string;
   name: string;
   address: string;
   city: string;
@@ -8,6 +9,7 @@ export interface Property {
 }
 
 export interface PropertyForm {
+  ownerId: number;
   name: string;
   address: string;
   city: string;

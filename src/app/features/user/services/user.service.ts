@@ -26,4 +26,8 @@ export class UserService {
   deleteUser(id: number): Observable<void> {
     return this.http.delete<void>(`${this.apiUrl}/${id}`);
   }
+
+  getOwners(): Observable<User[]> {
+    return this.http.get<User[]>(`${this.apiUrl}/by-role/OWNER`);
+  }
 }

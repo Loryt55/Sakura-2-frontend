@@ -8,6 +8,16 @@
     </div>
 
     <div class="form-group">
+      <label>Owner</label>
+      <select [(ngModel)]="form.ownerId" name="ownerId" required>
+        <option [value]="0" disabled>Select an owner</option>
+        <option *ngFor="let owner of owners" [value]="owner.id">
+          {{ owner.firstName }} {{ owner.lastName }}
+        </option>
+      </select>
+    </div>
+
+    <div class="form-group">
       <label>Address</label>
       <input type="text" [(ngModel)]="form.address" name="address" placeholder="Street address" required />
     </div>

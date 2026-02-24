@@ -1,8 +1,9 @@
-import { Component, EventEmitter, Input, Output, OnChanges, SimpleChanges } from '@angular/core';
+import { Component, EventEmitter, Input, Output, OnChanges, OnInit, SimpleChanges } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
-import {Property, PropertyForm} from '../../../core/models/property.model';
-
+import { Property, PropertyForm } from '../../../core/models/property.model';
+import { UserService } from '../../user/services/user.service';
+import { User } from '../../../core/models/user.model';
 
 @Component({
   selector: 'app-property-form',
@@ -11,12 +12,15 @@ import {Property, PropertyForm} from '../../../core/models/property.model';
   templateUrl: './property-form.component.html',
   styleUrls: ['./property-form.component.scss']
 })
-export class PropertyFormComponent implements OnChanges {
+export class PropertyFormComponent implements OnChanges, OnInit {
   @Input() property?: Property;
   @Output() save = new EventEmitter<PropertyForm>();
   @Output() cancel = new EventEmitter<void>();
 
+  owners: User[] = [];
+
   form: PropertyForm = {
+    ownerId: 0,
     name: '',
     address: '',
     city: '',
@@ -24,9 +28,29 @@ export class PropertyFormComponent implements OnChanges {
     pricePerMonth: 0
   };
 
+  constructor(private userService: UserService) {}
+
+  ngOnInit(): void {
+    this.userService.getOwners().subscribe({
+      next: data => {
+        this.owners = data;
+
+        // pre-compila ownerId in edit mode
+        if (this.property) {
+          const matchingOwner = this.owners.find(o =>
+            o.firstName + ' ' + o.lastName === this.property!.ownerFullName
+          );
+          this.form.ownerId = matchingOwner ? matchingOwner.id : 0;
+        }
+      },
+      error: err => console.error(err)
+    });
+  }
+
   ngOnChanges(changes: SimpleChanges): void {
     if (changes['property'] && this.property) {
       this.form = {
+        ownerId: 0,
         name: this.property.name,
         address: this.property.address,
         city: this.property.city,
@@ -35,6 +59,7 @@ export class PropertyFormComponent implements OnChanges {
       };
     } else {
       this.form = {
+        ownerId: 0,
         name: '',
         address: '',
         city: '',
@@ -44,11 +69,6 @@ export class PropertyFormComponent implements OnChanges {
     }
   }
 
-  onSubmit() {
-    this.save.emit(this.form);
-  }
-
-  onCancel() {
-    this.cancel.emit();
-  }
+  onSubmit() { this.save.emit(this.form); }
+  onCancel() { this.cancel.emit(); }
 }
