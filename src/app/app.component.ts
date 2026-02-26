@@ -21,7 +21,7 @@ import {ThemeService} from './features/theme/services/ThemeService';
           {{ authService.getCurrentUser()?.firstName }}
           <span class="user-role">{{ authService.getCurrentUser()?.roleName }}</span>
         </span>
-        <button class="btn-toggle" (click)="toggleDarkMode()">
+        <button class="btn-toggle" (click)="themeService.toggle()">
           {{ themeService.isDark ? '☀️' : '🌙' }}
         </button>
         <button class="btn-logout" (click)="logout()">Logout</button>
@@ -34,18 +34,11 @@ import {ThemeService} from './features/theme/services/ThemeService';
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent {
-  isDark = false;
-
   constructor(
     public authService: AuthService,
     public themeService: ThemeService,
     private router: Router
   ) {}
-
-  toggleDarkMode() {
-    this.isDark = !this.isDark;
-    document.body.classList.toggle('dark-mode', this.isDark);
-  }
 
   logout() {
     this.authService.logout();
