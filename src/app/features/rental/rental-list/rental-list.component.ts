@@ -3,11 +3,12 @@ import { CommonModule } from '@angular/common';
 import { Rental, RentalForm } from '../../../core/models/rental.model';
 import { RentalService } from '../services/rental.service';
 import { RentalFormComponent } from '../rental-form/rental-form.component';
+import {ModalComponent} from '../../../core/components/modal/modal.component';
 
 @Component({
   selector: 'app-rental-list',
   standalone: true,
-  imports: [CommonModule, RentalFormComponent],
+  imports: [CommonModule, RentalFormComponent, ModalComponent],
   templateUrl: './rental-list.component.html',
   styleUrls: ['./rental-list.component.scss']
 })

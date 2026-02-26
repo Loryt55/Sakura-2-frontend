@@ -1,9 +1,10 @@
-<app-rental-form
-  *ngIf="showForm"
-  [rental]="editingRental"
-  (save)="onSave($event)"
-  (cancel)="cancelEdit()"
-></app-rental-form>
+<app-modal *ngIf="showForm" (close)="cancelEdit()">
+  <app-rental-form
+    [rental]="editingRental"
+    (save)="onSave($event)"
+    (cancel)="cancelEdit()"
+  ></app-rental-form>
+</app-modal>
 
 <div class="list-header">
   <h2>Rentals</h2>

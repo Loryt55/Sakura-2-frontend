@@ -1,9 +1,10 @@
-<app-property-form
-  *ngIf="showForm"
-  [property]="editingProperty"
-  (save)="onSave($event)"
-  (cancel)="cancelEdit()"
-></app-property-form>
+<app-modal *ngIf="showForm" (close)="cancelEdit()">
+  <app-property-form
+    [property]="editingProperty"
+    (save)="onSave($event)"
+    (cancel)="cancelEdit()"
+  ></app-property-form>
+</app-modal>
 
 <div class="list-header">
   <h2>Properties</h2>

@@ -3,11 +3,12 @@ import {PropertyFormComponent} from '../property-form/property-form.component';
 import {CommonModule} from '@angular/common';
 import {Property, PropertyForm} from '../../../core/models/property.model';
 import {PropertyService} from '../services/property.service';
+import {ModalComponent} from '../../../core/components/modal/modal.component';
 
 @Component({
   selector: 'app-property-list',
   standalone: true,
-  imports: [CommonModule, PropertyFormComponent],
+  imports: [CommonModule, PropertyFormComponent, ModalComponent],
   templateUrl: './property-list.component.html',
   styleUrls: ['./property-list.component.scss']
 })

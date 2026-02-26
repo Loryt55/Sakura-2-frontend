@@ -1,9 +1,10 @@
-<app-user-form
-  *ngIf="showForm"
-  [user]="editingUser"
-  (save)="onSave($event)"
-  (cancel)="cancelEdit()"
-></app-user-form>
+<app-modal *ngIf="showForm" (close)="cancelEdit()">
+  <app-user-form
+    [user]="editingUser"
+    (save)="onSave($event)"
+    (cancel)="cancelEdit()"
+  ></app-user-form>
+</app-modal>
 
 <div class="list-header">
   <h2>Users</h2>

@@ -3,11 +3,12 @@ import { CommonModule } from '@angular/common';
 import {User, UserForm} from '../../../core/models/user.model';
 import {UserService} from '../services/user.service';
 import {UserFormComponent} from '../user-form/user-form.component';
+import {ModalComponent} from '../../../core/components/modal/modal.component';
 
 @Component({
   selector: 'app-user-list',
   standalone: true,
-  imports: [CommonModule, UserFormComponent],
+  imports: [CommonModule, UserFormComponent, ModalComponent],
   templateUrl: './user-list.component.html',
   styleUrls: ['./user-list.component.scss']
 })
