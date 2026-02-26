@@ -35,7 +35,6 @@ export class RentalFormComponent implements OnChanges, OnInit {
   ) {}
 
   ngOnInit(): void {
-    // carica proprietà
     this.propertyService.getAllProperties().subscribe({
       next: data => {
         this.properties = data;
