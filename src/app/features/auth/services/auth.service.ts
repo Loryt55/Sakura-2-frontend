@@ -4,11 +4,13 @@ import { Observable } from 'rxjs';
 import { tap } from 'rxjs/operators';
 
 export interface LoggedUser {
+  /*TODO: Valutare se mettere nella cartella models*/
   id: number;
   firstName: string;
   lastName: string;
   email: string;
   roleName: string;
+  token: string;
 }
 
 @Injectable({
@@ -37,6 +39,10 @@ export class AuthService {
   logout(): void {
     this.currentUser = null;
     localStorage.removeItem('currentUser');
+  }
+
+  getToken(): string | null {
+    return this.currentUser?.token ?? null;
   }
 
   getCurrentUser(): LoggedUser | null {
