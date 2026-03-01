@@ -1,45 +1,66 @@
 <div class="form-overlay">
   <h3>{{ property ? 'Edit Property' : 'New Property' }}</h3>
 
-  <form (ngSubmit)="onSubmit()">
+  <form [formGroup]="form" (ngSubmit)="onSubmit()">
+
     <div class="form-group">
       <label>Name</label>
-      <input type="text" [(ngModel)]="form.name" name="name" placeholder="Property name" required />
+      <input type="text" formControlName="name" placeholder="Property name" />
+      <span class="error" *ngIf="f.name.invalid && f.name.touched">
+        <span *ngIf="f.name.errors?.['required']">Name is required</span>
+        <span *ngIf="f.name.errors?.['minlength']">Min 2 characters</span>
+      </span>
     </div>
 
     <div class="form-group">
       <label>Owner</label>
-      <select [(ngModel)]="form.ownerId" name="ownerId" required>
+      <select formControlName="ownerId">
         <option [value]="0" disabled>Select an owner</option>
         <option *ngFor="let owner of owners" [value]="owner.id">
           {{ owner.firstName }} {{ owner.lastName }}
         </option>
       </select>
+      <span class="error" *ngIf="f.ownerId.invalid && f.ownerId.touched">
+        Owner is required
+      </span>
     </div>
 
     <div class="form-group">
       <label>Address</label>
-      <input type="text" [(ngModel)]="form.address" name="address" placeholder="Street address" required />
+      <input type="text" formControlName="address" placeholder="Street address" />
+      <span class="error" *ngIf="f.address.invalid && f.address.touched">
+        Address is required
+      </span>
     </div>
 
     <div class="form-group">
       <label>City</label>
-      <input type="text" [(ngModel)]="form.city" name="city" placeholder="City" required />
+      <input type="text" formControlName="city" placeholder="City" />
+      <span class="error" *ngIf="f.city.invalid && f.city.touched">
+        City is required
+      </span>
     </div>
 
     <div class="form-group">
       <label>Rooms</label>
-      <input type="number" [(ngModel)]="form.rooms" name="rooms" min="1" />
+      <input type="number" formControlName="rooms" min="1" />
+      <span class="error" *ngIf="f.rooms.invalid && f.rooms.touched">
+        Rooms must be at least 1
+      </span>
     </div>
 
     <div class="form-group">
       <label>Price per Month (€)</label>
-      <input type="number" [(ngModel)]="form.pricePerMonth" name="pricePerMonth" min="0" />
+      <input type="number" formControlName="pricePerMonth" min="0" />
+      <span class="error" *ngIf="f.pricePerMonth.invalid && f.pricePerMonth.touched">
+        Price must be greater than 0
+      </span>
     </div>
 
     <div class="form-actions">
-      <button type="submit">Save</button>
+      <button type="submit" [disabled]="form.invalid">Save</button>
       <button type="button" (click)="onCancel()">Cancel</button>
     </div>
+
   </form>
 </div>

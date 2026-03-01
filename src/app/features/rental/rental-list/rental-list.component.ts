@@ -5,6 +5,7 @@ import { RentalService } from '../services/rental.service';
 import { RentalFormComponent } from '../rental-form/rental-form.component';
 import {ModalComponent} from '../../../core/components/modal/modal.component';
 import {AuthService} from '../../auth/services/auth.service';
+import {NotificationService} from '../../notification/services/notification.service';
 
 @Component({
   selector: 'app-rental-list',
@@ -19,7 +20,8 @@ export class RentalListComponent {
   editingRental?: Rental;
 
   constructor(private readonly rentalService: RentalService,
-              public authService: AuthService) {
+              public authService: AuthService,
+              private notificationService: NotificationService) {
     this.loadRentals();
   }
 
@@ -38,7 +40,7 @@ export class RentalListComponent {
   loadRentals() {
     this.rentalService.getAllRentals().subscribe({
       next: data => this.rentals = data,
-      error: err => console.error(err)
+      error: () => this.notificationService.show('Failed to load rentals')
     });
   }
 
@@ -60,13 +62,21 @@ export class RentalListComponent {
   onSave(formData: RentalForm) {
     if (this.editingRental) {
       this.rentalService.updateRental(this.editingRental.id, formData).subscribe({
-        next: () => { this.loadRentals(); this.showForm = false; },
-        error: err => console.error(err)
+        next: () => {
+          this.loadRentals();
+          this.showForm = false;
+          this.showForm = false; this.notificationService.show('rental updated successfully', 'success');
+        },
+        error: () => this.notificationService.show('Failed to update rental')
       });
     } else {
       this.rentalService.createRental(formData).subscribe({
-        next: () => { this.loadRentals(); this.showForm = false; },
-        error: err => console.error(err)
+        next: () => {
+          this.loadRentals();
+          this.showForm = false;
+          this.notificationService.show('rental created successfully', 'success');
+        },
+        error: () => this.notificationService.show('Failed to create rental')
       });
     }
   }
@@ -74,8 +84,11 @@ export class RentalListComponent {
   delete(id: number) {
     if (!confirm('Are you sure?')) return;
     this.rentalService.deleteRental(id).subscribe({
-      next: () => this.loadRentals(),
-      error: err => console.error(err)
+      next: () => {
+        this.loadRentals();
+        this.notificationService.show('rental deleted successfully', 'success');
+      },
+      error: () => this.notificationService.show('Failed to delete rental')
     });
   }
 

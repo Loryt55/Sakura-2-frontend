@@ -5,6 +5,7 @@ import {Property, PropertyForm} from '../../../core/models/property.model';
 import {PropertyService} from '../services/property.service';
 import {ModalComponent} from '../../../core/components/modal/modal.component';
 import {AuthService} from '../../auth/services/auth.service';
+import {NotificationService} from '../../notification/services/notification.service';
 
 @Component({
   selector: 'app-property-list',
@@ -19,7 +20,8 @@ export class PropertyListComponent {
   editingProperty?: Property;
 
   constructor(private readonly propertyService: PropertyService,
-              public authService: AuthService) {
+              public authService: AuthService,
+              private notificationService: NotificationService) {
     this.loadProperties();
   }
 
@@ -38,7 +40,7 @@ export class PropertyListComponent {
   loadProperties() {
     this.propertyService.getAllProperties().subscribe({
       next: data => this.properties = data,
-      error: err => console.error(err),
+      error: () => this.notificationService.show('Failed to load properties')
     });
   }
 
@@ -66,16 +68,18 @@ export class PropertyListComponent {
         next: () => {
           this.loadProperties();
           this.showForm = false;
+          this.notificationService.show('Property updated successfully', 'success');
         },
-        error: err => console.error(err)
+        error: () => this.notificationService.show('Failed to update property')
       });
     } else {
       this.propertyService.addProperty(formData).subscribe({
         next: () => {
           this.loadProperties();
           this.showForm = false;
+          this.notificationService.show('Property created successfully', 'success');
         },
-        error: err => console.error(err)
+        error: () => this.notificationService.show('Failed to create property')
       });
     }
   }
@@ -83,8 +87,11 @@ export class PropertyListComponent {
   delete(id: number) {
     if (!confirm('Are you sure?')) return;
     this.propertyService.deleteProperty(id).subscribe({
-      next: () => this.loadProperties(),
-      error: err => console.error(err)
+      next: () => {
+        this.loadProperties();
+        this.notificationService.show('Property deleted successfully', 'success');
+      },
+      error: () => this.notificationService.show('Failed to delete property')
     });
   }
 

@@ -1,0 +1,9 @@
+<div class="notification"
+     *ngIf="notification"
+     [class.error]="notification.type === 'error'"
+     [class.success]="notification.type === 'success'">
+
+  <span class="notification-message">{{ notification.message }}</span>
+
+  <button class="notification-close" (click)="dismiss()">✕</button>
+</div>

@@ -41,6 +41,13 @@
   }
 }
 
+.error {
+  color: var(--danger);
+  font-size: 0.78rem;
+  margin-top: 0.2rem;
+  display: block;
+}
+
 select {
   background: var(--bg);
   border: 1px solid var(--border);
@@ -87,6 +94,11 @@ select {
       &:hover {
         color: var(--text);
       }
+    }
+
+    &:disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
     }
   }
 }

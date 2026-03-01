@@ -16,7 +16,6 @@
   --shadow: 0 4px 24px rgba(0,0,0,0.08);
 }
 
-/* Tema DARK — attivo quando body ha classe dark-mode */
 body.dark-mode {
   --bg: #0f0f13;
   --surface: #1a1a24;
@@ -25,6 +24,7 @@ body.dark-mode {
   --text: #e8e8f0;
   --text-muted: #7070a0;
   --shadow: 0 4px 24px rgba(0,0,0,0.4);
+  color-scheme: dark;
 }
 
 * {

@@ -57,6 +57,13 @@
   }
 }
 
+.error {
+  color: var(--danger);
+  font-size: 0.78rem;
+  margin-top: 0.2rem;
+  display: block;
+}
+
 .form-actions {
   display: flex;
   gap: 0.75rem;
@@ -87,6 +94,11 @@
       &:hover {
         color: var(--text);
       }
+    }
+
+    &:disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
     }
   }
 }

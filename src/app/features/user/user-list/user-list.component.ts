@@ -4,6 +4,7 @@ import {User, UserForm} from '../../../core/models/user.model';
 import {UserService} from '../services/user.service';
 import {UserFormComponent} from '../user-form/user-form.component';
 import {ModalComponent} from '../../../core/components/modal/modal.component';
+import {NotificationService} from '../../notification/services/notification.service';
 
 @Component({
   selector: 'app-user-list',
@@ -17,14 +18,15 @@ export class UserListComponent {
   showForm = false;
   editingUser?: User;
 
-  constructor(private userService: UserService) {
+  constructor(private userService: UserService,
+              private notificationService: NotificationService) {
     this.loadUsers();
   }
 
   loadUsers() {
     this.userService.getAllUsers().subscribe({
       next: data => this.users = data,
-      error: err => console.error(err)
+      error: () => this.notificationService.show('Failed to load users')
     });
   }
 
@@ -47,13 +49,20 @@ export class UserListComponent {
     if (this.editingUser) {
       const { password, ...updateData } = formData; // ← esclude password dall'update
       this.userService.updateUser(this.editingUser.id, updateData).subscribe({
-        next: () => { this.loadUsers(); this.showForm = false; },
-        error: err => console.error(err)
+        next: () => {
+          this.loadUsers();
+          this.showForm = false;
+          this.notificationService.show('user updated successfully', 'success');
+        },
+        error: () => this.notificationService.show('Failed to update user')
       });
     } else {
       this.userService.createUser(formData).subscribe({
-        next: () => { this.loadUsers(); this.showForm = false; },
-        error: err => console.error(err)
+        next: () => {
+          this.loadUsers();
+          this.showForm = false;this.notificationService.show('user created successfully', 'success');
+        },
+        error: () => this.notificationService.show('Failed to create user')
       });
     }
   }
@@ -61,8 +70,11 @@ export class UserListComponent {
   delete(id: number) {
     if (!confirm('Are you sure?')) return;
     this.userService.deleteUser(id).subscribe({
-      next: () => this.loadUsers(),
-      error: err => console.error(err)
+      next: () => {
+        this.loadUsers();
+        this.notificationService.show('user deleted successfully', 'success');
+      },
+      error: () => this.notificationService.show('Failed to delete user')
     });
   }
 

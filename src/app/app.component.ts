@@ -3,11 +3,12 @@ import {Router, RouterLink, RouterLinkActive, RouterOutlet} from '@angular/route
 import {CommonModule} from '@angular/common';
 import {AuthService} from './features/auth/services/auth.service';
 import {ThemeService} from './features/theme/services/ThemeService';
+import {NotificationComponent} from './features/notification/components/notification.component';
 
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [RouterOutlet, RouterLink, RouterLinkActive, CommonModule],
+  imports: [RouterOutlet, RouterLink, RouterLinkActive, CommonModule, NotificationComponent],
   template: `
     <header *ngIf="authService.isLoggedIn()">
       <h1>Sakura <span>Manager</span></h1>
@@ -30,6 +31,7 @@ import {ThemeService} from './features/theme/services/ThemeService';
     <main>
       <router-outlet></router-outlet>
     </main>
+    <app-notification></app-notification>
   `,
   styleUrls: ['./app.component.scss']
 })

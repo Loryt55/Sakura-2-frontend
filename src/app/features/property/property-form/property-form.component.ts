@@ -1,14 +1,14 @@
-import { Component, EventEmitter, Input, Output, OnChanges, OnInit, SimpleChanges } from '@angular/core';
-import { FormsModule } from '@angular/forms';
-import { CommonModule } from '@angular/common';
-import { Property, PropertyForm } from '../../../core/models/property.model';
-import { UserService } from '../../user/services/user.service';
-import { User } from '../../../core/models/user.model';
+import {Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges} from '@angular/core';
+import {FormControl, FormGroup, ReactiveFormsModule, Validators} from '@angular/forms';
+import {CommonModule} from '@angular/common';
+import {Property, PropertyForm} from '../../../core/models/property.model';
+import {UserService} from '../../user/services/user.service';
+import {User} from '../../../core/models/user.model';
 
 @Component({
   selector: 'app-property-form',
   standalone: true,
-  imports: [CommonModule, FormsModule],
+  imports: [CommonModule, ReactiveFormsModule],
   templateUrl: './property-form.component.html',
   styleUrls: ['./property-form.component.scss']
 })
@@ -19,28 +19,27 @@ export class PropertyFormComponent implements OnChanges, OnInit {
 
   owners: User[] = [];
 
-  form: PropertyForm = {
-    ownerId: 0,
-    name: '',
-    address: '',
-    city: '',
-    rooms: 1,
-    pricePerMonth: 0
-  };
+  form = new FormGroup({
+    ownerId: new FormControl<number>(0, [Validators.required, Validators.min(1)]),
+    name: new FormControl('', [Validators.required, Validators.minLength(2)]),
+    address: new FormControl('', [Validators.required]),
+    city: new FormControl('', [Validators.required]),
+    rooms: new FormControl<number>(1, [Validators.required, Validators.min(1)]),
+    pricePerMonth: new FormControl<number>(0, [Validators.required, Validators.min(0.01)])
+  });
 
-  constructor(private readonly userService: UserService) {}
+  constructor(private readonly userService: UserService) {
+  }
 
   ngOnInit(): void {
     this.userService.getOwners().subscribe({
       next: data => {
         this.owners = data;
-
-        // pre-compila ownerId in edit mode
         if (this.property) {
-          const matchingOwner = this.owners.find(o =>
+          const match = this.owners.find(o =>
             o.firstName + ' ' + o.lastName === this.property!.ownerFullName
           );
-          this.form.ownerId = matchingOwner ? matchingOwner.id : 0;
+          this.form.patchValue({ownerId: match ? match.id : 0});
         }
       },
       error: err => console.error(err)
@@ -49,26 +48,30 @@ export class PropertyFormComponent implements OnChanges, OnInit {
 
   ngOnChanges(changes: SimpleChanges): void {
     if (changes['property'] && this.property) {
-      this.form = {
+      this.form.patchValue({
         ownerId: 0,
         name: this.property.name,
         address: this.property.address,
         city: this.property.city,
         rooms: this.property.rooms,
         pricePerMonth: this.property.pricePerMonth
-      };
-    } else {
-      this.form = {
-        ownerId: 0,
-        name: '',
-        address: '',
-        city: '',
-        rooms: 1,
-        pricePerMonth: 0
-      };
+      });
+    } else if (changes['property'] && !this.property) {
+      this.form.reset({ownerId: 0, rooms: 1, pricePerMonth: 0});
     }
   }
 
-  onSubmit() { this.save.emit(this.form); }
-  onCancel() { this.cancel.emit(); }
+  get f() {
+    return this.form.controls;
+  }
+
+  onSubmit() {
+    if (this.form.invalid) return;
+    this.save.emit(this.form.value as PropertyForm);
+  }
+
+  onCancel() {
+    this.cancel.emit();
+  }
+
 }
