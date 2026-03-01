@@ -1,5 +1,9 @@
-<div class="modal-backdrop" (click)="onBackdropClick()">
-  <div class="modal-card" (click)="$event.stopPropagation()">
+<div class="modal-backdrop"
+     (mousedown)="onBackdropMousedown()"
+     (mouseup)="onBackdropMouseup()">
+  <div class="modal-card"
+       (mousedown)="onCardMousedown(); $event.stopPropagation()"
+       (mouseup)="$event.stopPropagation()">
     <ng-content></ng-content>
   </div>
 </div>

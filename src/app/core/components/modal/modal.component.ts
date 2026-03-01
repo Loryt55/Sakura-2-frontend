@@ -1,4 +1,4 @@
-import {Component, EventEmitter, HostListener, Output} from '@angular/core';
+import { Component, EventEmitter, Output, HostListener } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
 @Component({
@@ -11,8 +11,21 @@ import { CommonModule } from '@angular/common';
 export class ModalComponent {
   @Output() close = new EventEmitter<void>();
 
-  onBackdropClick() {
-    this.close.emit();
+  private mousedownOnBackdrop = false;
+
+  onBackdropMousedown() {
+    this.mousedownOnBackdrop = true;
+  }
+
+  onCardMousedown() {
+    this.mousedownOnBackdrop = false;
+  }
+
+  onBackdropMouseup() {
+    if (this.mousedownOnBackdrop) {
+      this.close.emit();
+    }
+    this.mousedownOnBackdrop = false;
   }
 
   @HostListener('document:keydown.escape')
