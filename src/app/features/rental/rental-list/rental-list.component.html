@@ -25,9 +25,9 @@
       <span class="price">€{{ rental.totalPrice }}</span>
     </div>
 
-    <div class="card-actions">
-      <button class="btn-edit" (click)="edit(rental)">Edit</button>
-      <button class="btn-delete" (click)="delete(rental.id)">Delete</button>
+    <div class="card-actions" *ngIf="canEdit() || canDelete()">
+      <button class="btn-edit" *ngIf="canEdit()" (click)="edit(rental)">Edit</button>
+      <button class="btn-delete" *ngIf="canDelete()" (click)="delete(rental.id)">Delete</button>
     </div>
   </div>
 

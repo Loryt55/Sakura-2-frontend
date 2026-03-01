@@ -4,6 +4,7 @@ import { Rental, RentalForm } from '../../../core/models/rental.model';
 import { RentalService } from '../services/rental.service';
 import { RentalFormComponent } from '../rental-form/rental-form.component';
 import {ModalComponent} from '../../../core/components/modal/modal.component';
+import {AuthService} from '../../auth/services/auth.service';
 
 @Component({
   selector: 'app-rental-list',
@@ -17,8 +18,21 @@ export class RentalListComponent {
   showForm = false;
   editingRental?: Rental;
 
-  constructor(private rentalService: RentalService) {
+  constructor(private readonly rentalService: RentalService,
+              public authService: AuthService) {
     this.loadRentals();
+  }
+
+  canAdd(): boolean {
+    return this.authService.isAdmin() || this.authService.isOwner();
+  }
+
+  canEdit(): boolean {
+    return this.authService.isAdmin() || this.authService.isOwner();
+  }
+
+  canDelete(): boolean {
+    return this.authService.isAdmin() || this.authService.isOwner();
   }
 
   loadRentals() {

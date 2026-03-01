@@ -10,7 +10,7 @@
   <h2>Properties</h2>
   <div class="header-actions">
     <button class="btn-refresh" (click)="loadProperties()">↻ Refresh</button>
-    <button class="btn-add" (click)="addNew()">+ Add Property</button>
+    <button class="btn-add" *ngIf="canAdd()" (click)="addNew()">+ Add Property</button>
   </div>
 </div>
 
@@ -25,9 +25,9 @@
       <span class="price">€{{ prop.pricePerMonth }}/mo</span>
     </div>
 
-    <div class="card-actions">
-      <button class="btn-edit" (click)="edit(prop)">Edit</button>
-      <button class="btn-delete" (click)="delete(prop.id)">Delete</button>
+    <div class="card-actions" *ngIf="canEdit() || canDelete()">
+      <button class="btn-edit" *ngIf="canEdit()" (click)="edit(prop)">Edit</button>
+      <button class="btn-delete" *ngIf="canDelete()" (click)="delete(prop.id)">Delete</button>
     </div>
   </div>
 

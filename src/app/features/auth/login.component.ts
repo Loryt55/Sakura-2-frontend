@@ -29,7 +29,7 @@ export class LoginComponent {
 
     this.authService.login(this.email, this.password).subscribe({
       next: user => {
-        // reindirizza in base al ruolo
+
         if (user.roleName === 'ADMIN') {
           this.router.navigate(['/properties']);
         } else if (user.roleName === 'OWNER') {

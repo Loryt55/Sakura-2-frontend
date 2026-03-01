@@ -4,6 +4,7 @@ import {CommonModule} from '@angular/common';
 import {Property, PropertyForm} from '../../../core/models/property.model';
 import {PropertyService} from '../services/property.service';
 import {ModalComponent} from '../../../core/components/modal/modal.component';
+import {AuthService} from '../../auth/services/auth.service';
 
 @Component({
   selector: 'app-property-list',
@@ -17,8 +18,21 @@ export class PropertyListComponent {
   showForm = false;
   editingProperty?: Property;
 
-  constructor(private propertyService: PropertyService) {
+  constructor(private readonly propertyService: PropertyService,
+              public authService: AuthService) {
     this.loadProperties();
+  }
+
+  canAdd(): boolean {
+    return this.authService.isAdmin() || this.authService.isOwner();
+  }
+
+  canEdit(): boolean {
+    return this.authService.isAdmin() || this.authService.isOwner();
+  }
+
+  canDelete(): boolean {
+    return this.authService.isAdmin() || this.authService.isOwner();
   }
 
   loadProperties() {

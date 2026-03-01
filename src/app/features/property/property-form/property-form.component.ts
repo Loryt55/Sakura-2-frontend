@@ -28,7 +28,7 @@ export class PropertyFormComponent implements OnChanges, OnInit {
     pricePerMonth: 0
   };
 
-  constructor(private userService: UserService) {}
+  constructor(private readonly userService: UserService) {}
 
   ngOnInit(): void {
     this.userService.getOwners().subscribe({
