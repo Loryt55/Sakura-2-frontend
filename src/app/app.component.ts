@@ -1,9 +1,9 @@
 import { Component } from '@angular/core';
 import {Router, RouterLink, RouterLinkActive, RouterOutlet} from '@angular/router';
 import {CommonModule} from '@angular/common';
-import {AuthService} from './features/auth/services/auth.service';
-import {ThemeService} from './features/theme/services/ThemeService';
-import {NotificationComponent} from './features/notification/components/notification.component';
+import {AuthService} from './core/services/auth.service';
+import {ThemeService} from './core/services/theme.service';
+import {NotificationComponent} from './core/components/notification/notification.component';
 
 @Component({
   selector: 'app-root',

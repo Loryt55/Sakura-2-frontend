@@ -3,7 +3,7 @@ import {PropertyListComponent} from './features/property/property-list/property-
 import {UserListComponent} from './features/user/user-list/user-list.component';
 import {RentalListComponent} from './features/rental/rental-list/rental-list.component';
 import {LoginComponent} from './features/auth/login.component';
-import {authGuard} from './features/auth/guards/auth.guard';
+import {authGuard} from './core/guards/auth.guard';
 
 export const routes: Routes = [
   { path: 'login', component: LoginComponent },

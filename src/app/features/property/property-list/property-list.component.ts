@@ -4,8 +4,8 @@ import {CommonModule} from '@angular/common';
 import {Property, PropertyForm} from '../../../core/models/property.model';
 import {PropertyService} from '../services/property.service';
 import {ModalComponent} from '../../../core/components/modal/modal.component';
-import {AuthService} from '../../auth/services/auth.service';
-import {NotificationService} from '../../notification/services/notification.service';
+import {AuthService} from '../../../core/services/auth.service';
+import {NotificationService} from '../../../core/services/notification.service';
 
 @Component({
   selector: 'app-property-list',

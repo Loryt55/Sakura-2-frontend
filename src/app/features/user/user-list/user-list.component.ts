@@ -4,7 +4,7 @@ import {User, UserForm} from '../../../core/models/user.model';
 import {UserService} from '../services/user.service';
 import {UserFormComponent} from '../user-form/user-form.component';
 import {ModalComponent} from '../../../core/components/modal/modal.component';
-import {NotificationService} from '../../notification/services/notification.service';
+import {NotificationService} from '../../../core/services/notification.service';
 
 @Component({
   selector: 'app-user-list',

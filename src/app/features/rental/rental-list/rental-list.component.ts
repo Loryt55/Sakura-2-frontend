@@ -4,8 +4,8 @@ import { Rental, RentalForm } from '../../../core/models/rental.model';
 import { RentalService } from '../services/rental.service';
 import { RentalFormComponent } from '../rental-form/rental-form.component';
 import {ModalComponent} from '../../../core/components/modal/modal.component';
-import {AuthService} from '../../auth/services/auth.service';
-import {NotificationService} from '../../notification/services/notification.service';
+import {AuthService} from '../../../core/services/auth.service';
+import {NotificationService} from '../../../core/services/notification.service';
 
 @Component({
   selector: 'app-rental-list',
