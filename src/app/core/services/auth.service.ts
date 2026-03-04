@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { tap } from 'rxjs/operators';
+import { environment } from "../../../environments/environment";
 
 export interface LoggedUser {
   /*TODO: Valutare se mettere nella cartella models*/
@@ -17,7 +18,7 @@ export interface LoggedUser {
   providedIn: 'root'
 })
 export class AuthService {
-  private apiUrl = '${environment.apiUrl}/auth';
+  private apiUrl = `${environment.apiUrl}/auth`;
   private currentUser: LoggedUser | null = null;
 
   constructor(private http: HttpClient) {

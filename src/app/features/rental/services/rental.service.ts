@@ -2,12 +2,13 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { Rental, RentalForm } from '../../../core/models/rental.model';
+import {environment} from '../../../../environments/environment';
 
 @Injectable({
   providedIn: 'root'
 })
 export class RentalService {
-  private apiUrl = '${environment.apiUrl}/rentals';
+  private apiUrl = `${environment.apiUrl}/rentals`;
 
   constructor(private http: HttpClient) {}
 

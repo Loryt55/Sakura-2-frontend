@@ -1,7 +1,7 @@
 import {Injectable} from '@angular/core';
 import {BehaviorSubject} from 'rxjs';
 
-export interface AppNotification {  // ← rinominato
+export interface AppNotification {
   message: string;
   type: 'error' | 'success';
 }
