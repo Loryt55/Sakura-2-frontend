@@ -21,7 +21,7 @@ export class RentalListComponent {
 
   constructor(private readonly rentalService: RentalService,
               public authService: AuthService,
-              private notificationService: NotificationService) {
+              private readonly notificationService: NotificationService) {
     this.loadRentals();
   }
 

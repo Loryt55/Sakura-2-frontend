@@ -17,7 +17,7 @@ export interface LoggedUser {
   providedIn: 'root'
 })
 export class AuthService {
-  private apiUrl = 'http://localhost:8080/api/auth';
+  private apiUrl = '${environment.apiUrl}/auth';
   private currentUser: LoggedUser | null = null;
 
   constructor(private http: HttpClient) {

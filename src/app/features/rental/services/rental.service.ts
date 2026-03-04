@@ -7,7 +7,7 @@ import { Rental, RentalForm } from '../../../core/models/rental.model';
   providedIn: 'root'
 })
 export class RentalService {
-  private apiUrl = 'http://localhost:8080/api/rentals';
+  private apiUrl = '${environment.apiUrl}/rentals';
 
   constructor(private http: HttpClient) {}
 

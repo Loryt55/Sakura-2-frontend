@@ -7,7 +7,7 @@ import {Property, PropertyForm} from '../../../core/models/property.model';
   providedIn: 'root',
 })
 export class PropertyService {
-  private apiUrl = 'http://localhost:8080/api/properties';
+  private apiUrl = '${environment.apiUrl}/properties';
 
   constructor(private http: HttpClient) {
   }
