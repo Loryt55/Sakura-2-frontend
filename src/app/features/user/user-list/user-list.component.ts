@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import {Component, ViewChild} from '@angular/core';
 import { CommonModule } from '@angular/common';
 import {User, UserForm} from '../../../core/models/user.model';
 import {UserService} from '../services/user.service';
@@ -17,6 +17,7 @@ export class UserListComponent {
   users: User[] = [];
   showForm = false;
   editingUser?: User;
+  @ViewChild(UserFormComponent) formComponent?: UserFormComponent;
 
   constructor(private userService: UserService,
               private notificationService: NotificationService) {
@@ -60,9 +61,17 @@ export class UserListComponent {
       this.userService.createUser(formData).subscribe({
         next: () => {
           this.loadUsers();
-          this.showForm = false;this.notificationService.show('user created successfully', 'success');
+          this.showForm = false;
+          this.formComponent?.resetLoading();
+          this.notificationService.show('User created successfully', 'success');
         },
-        error: () => this.notificationService.show('Failed to create user')
+        error: (err) => {                                    // ← riceve l'errore
+          this.formComponent?.resetLoading();
+          const message = err.status === 409
+            ? 'Email already in use'
+            : 'Failed to create user';
+          this.notificationService.show(message, 'error');  // ← messaggio specifico
+        }
       });
     }
   }

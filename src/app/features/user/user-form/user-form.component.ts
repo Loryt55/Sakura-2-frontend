@@ -18,6 +18,7 @@ export class UserFormComponent implements OnChanges, OnInit {
 
   roles: Role[] = [];
   isEditing = false;
+  isLoading = false;
 
   form = new FormGroup({
     firstName: new FormControl('', [Validators.required]),
@@ -75,10 +76,18 @@ export class UserFormComponent implements OnChanges, OnInit {
 
   onSubmit() {
     if (this.form.invalid) return;
+    if (this.isLoading) return;
+
+    this.isLoading = true;
     this.save.emit(this.form.value as UserForm);
   }
 
   onCancel() {
+    this.isLoading = false;
     this.cancel.emit();
+  }
+
+  resetLoading() {
+    this.isLoading = false;
   }
 }

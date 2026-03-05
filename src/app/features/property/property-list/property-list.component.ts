@@ -1,4 +1,4 @@
-import {Component} from '@angular/core';
+import {Component, ViewChild} from '@angular/core';
 import {PropertyFormComponent} from '../property-form/property-form.component';
 import {CommonModule} from '@angular/common';
 import {Property, PropertyForm} from '../../../core/models/property.model';
@@ -18,6 +18,7 @@ export class PropertyListComponent {
   properties: Property[] = [];
   showForm = false;
   editingProperty?: Property;
+  @ViewChild(PropertyFormComponent) formComponent?: PropertyFormComponent;
 
   constructor(private readonly propertyService: PropertyService,
               public authService: AuthService,
@@ -68,18 +69,26 @@ export class PropertyListComponent {
         next: () => {
           this.loadProperties();
           this.showForm = false;
+          this.formComponent?.resetLoading();
           this.notificationService.show('Property updated successfully', 'success');
         },
-        error: () => this.notificationService.show('Failed to update property')
+        error: () => {
+          this.formComponent?.resetLoading(); // ← resetta anche in caso di errore
+          this.notificationService.show('Failed to update property');
+        }
       });
     } else {
       this.propertyService.addProperty(formData).subscribe({
         next: () => {
           this.loadProperties();
           this.showForm = false;
+          this.formComponent?.resetLoading();
           this.notificationService.show('Property created successfully', 'success');
         },
-        error: () => this.notificationService.show('Failed to create property')
+        error: () => {
+          this.formComponent?.resetLoading();
+          this.notificationService.show('Failed to create property');
+        }
       });
     }
   }

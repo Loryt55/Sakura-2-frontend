@@ -39,6 +39,7 @@ export class RentalFormComponent implements OnChanges, OnInit {
 
   properties: Property[] = [];
   tenants: User[] = [];
+  isLoading = false;
 
   form = new FormGroup({
     propertyId: new FormControl<number>(0, [Validators.required, Validators.min(1)]),
@@ -104,10 +105,14 @@ export class RentalFormComponent implements OnChanges, OnInit {
 
   onSubmit() {
     if (this.form.invalid) return;
+    if (this.isLoading) return;
+
+    this.isLoading = true;
     this.save.emit(this.form.value as RentalForm);
   }
 
   onCancel() {
+    this.isLoading = false;
     this.cancel.emit();
   }
 
@@ -122,5 +127,9 @@ export class RentalFormComponent implements OnChanges, OnInit {
 
   get maxStartDate(): string {
     return this.f.endDate.value ?? '';
+  }
+
+  resetLoading() {
+    this.isLoading = false;
   }
 }

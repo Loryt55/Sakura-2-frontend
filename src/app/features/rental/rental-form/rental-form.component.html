@@ -57,7 +57,9 @@
     </span>
 
     <div class="form-actions">
-      <button type="submit" [disabled]="form.invalid">Save</button>
+      <button type="submit" [disabled]="form.invalid || isLoading">
+        {{ isLoading ? 'Saving...' : 'Save' }}
+      </button>
       <button type="button" (click)="onCancel()">Cancel</button>
     </div>
 

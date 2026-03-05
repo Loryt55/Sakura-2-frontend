@@ -1,8 +1,8 @@
-import { Component } from '@angular/core';
-import { CommonModule } from '@angular/common';
-import { Rental, RentalForm } from '../../../core/models/rental.model';
-import { RentalService } from '../services/rental.service';
-import { RentalFormComponent } from '../rental-form/rental-form.component';
+import {Component, ViewChild} from '@angular/core';
+import {CommonModule} from '@angular/common';
+import {Rental, RentalForm} from '../../../core/models/rental.model';
+import {RentalService} from '../services/rental.service';
+import {RentalFormComponent} from '../rental-form/rental-form.component';
 import {ModalComponent} from '../../../core/components/modal/modal.component';
 import {AuthService} from '../../../core/services/auth.service';
 import {NotificationService} from '../../../core/services/notification.service';
@@ -18,6 +18,7 @@ export class RentalListComponent {
   rentals: Rental[] = [];
   showForm = false;
   editingRental?: Rental;
+  @ViewChild(RentalFormComponent) formComponent?: RentalFormComponent;
 
   constructor(private readonly rentalService: RentalService,
               public authService: AuthService,
@@ -50,7 +51,7 @@ export class RentalListComponent {
   }
 
   edit(rental: Rental) {
-    this.editingRental = { ...rental };
+    this.editingRental = {...rental};
     this.showForm = true;
   }
 
@@ -65,18 +66,26 @@ export class RentalListComponent {
         next: () => {
           this.loadRentals();
           this.showForm = false;
-          this.showForm = false; this.notificationService.show('rental updated successfully', 'success');
+          this.formComponent?.resetLoading();
+          this.notificationService.show('Rental updated successfully', 'success');
         },
-        error: () => this.notificationService.show('Failed to update rental')
+        error: (err) => {
+          this.formComponent?.resetLoading();
+          this.notificationService.show('Failed to update rental', 'error');
+        }
       });
     } else {
       this.rentalService.createRental(formData).subscribe({
         next: () => {
           this.loadRentals();
           this.showForm = false;
-          this.notificationService.show('rental created successfully', 'success');
+          this.formComponent?.resetLoading();
+          this.notificationService.show('Rental created successfully', 'success');
         },
-        error: () => this.notificationService.show('Failed to create rental')
+        error: (err) => {
+          this.formComponent?.resetLoading();
+          this.notificationService.show('Failed to create rental', 'error');
+        }
       });
     }
   }

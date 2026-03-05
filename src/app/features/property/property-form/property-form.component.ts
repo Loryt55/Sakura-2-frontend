@@ -18,6 +18,7 @@ export class PropertyFormComponent implements OnChanges, OnInit {
   @Output() cancel = new EventEmitter<void>();
 
   owners: User[] = [];
+  isLoading = false;
 
   form = new FormGroup({
     ownerId: new FormControl<number>(0, [Validators.required, Validators.min(1)]),
@@ -67,11 +68,19 @@ export class PropertyFormComponent implements OnChanges, OnInit {
 
   onSubmit() {
     if (this.form.invalid) return;
+    if (this.isLoading) return;
+
+    this.isLoading = true;
     this.save.emit(this.form.value as PropertyForm);
   }
 
   onCancel() {
+    this.isLoading = false;
     this.cancel.emit();
+  }
+
+  resetLoading() {
+    this.isLoading = false;
   }
 
 }
