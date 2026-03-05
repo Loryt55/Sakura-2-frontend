@@ -65,12 +65,12 @@ export class UserListComponent {
           this.formComponent?.resetLoading();
           this.notificationService.show('User created successfully', 'success');
         },
-        error: (err) => {                                    // ← riceve l'errore
+        error: (err) => {
           this.formComponent?.resetLoading();
           const message = err.status === 409
             ? 'Email already in use'
             : 'Failed to create user';
-          this.notificationService.show(message, 'error');  // ← messaggio specifico
+          this.notificationService.show(message, 'error');
         }
       });
     }
