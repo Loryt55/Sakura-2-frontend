@@ -14,24 +14,30 @@
   </div>
 </div>
 
-<div class="property-grid">
-  <div class="property-card" *ngFor="let prop of properties; trackBy: trackById">
-    <h3>{{ prop.name }}</h3>
-    <p class="card-location">{{ prop.address }}, {{ prop.city }}</p>
-    <p class="card-owner">Owner: {{ prop.ownerFullName }}</p>
+<div *ngIf="isLoading" class="spinner-container">
+  <div class="spinner"></div>
+</div>
 
-    <div class="card-meta">
-      <span class="tag">{{ prop.rooms }} rooms</span>
-      <span class="price">€{{ prop.pricePerMonth }}/mo</span>
+<div *ngIf="!isLoading">
+  <div class="property-grid">
+    <div class="property-card" *ngFor="let prop of properties; trackBy: trackById">
+      <h3>{{ prop.name }}</h3>
+      <p class="card-location">{{ prop.address }}, {{ prop.city }}</p>
+      <p class="card-owner">Owner: {{ prop.ownerFullName }}</p>
+
+      <div class="card-meta">
+        <span class="tag">{{ prop.rooms }} rooms</span>
+        <span class="price">€{{ prop.pricePerMonth }}/mo</span>
+      </div>
+
+      <div class="card-actions" *ngIf="canEdit() || canDelete()">
+        <button class="btn-edit" *ngIf="canEdit()" (click)="edit(prop)">Edit</button>
+        <button class="btn-delete" *ngIf="canDelete()" (click)="delete(prop.id)">Delete</button>
+      </div>
     </div>
 
-    <div class="card-actions" *ngIf="canEdit() || canDelete()">
-      <button class="btn-edit" *ngIf="canEdit()" (click)="edit(prop)">Edit</button>
-      <button class="btn-delete" *ngIf="canDelete()" (click)="delete(prop.id)">Delete</button>
+    <div *ngIf="properties.length === 0" class="no-properties">
+      <p>No properties found.</p>
     </div>
-  </div>
-
-  <div *ngIf="properties.length === 0" class="no-properties">
-    <p>No properties found.</p>
   </div>
 </div>

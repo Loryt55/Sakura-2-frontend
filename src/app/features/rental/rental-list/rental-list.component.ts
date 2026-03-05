@@ -19,6 +19,7 @@ export class RentalListComponent {
   showForm = false;
   editingRental?: Rental;
   @ViewChild(RentalFormComponent) formComponent?: RentalFormComponent;
+  isLoading = true;
 
   constructor(private readonly rentalService: RentalService,
               public authService: AuthService,
@@ -39,9 +40,16 @@ export class RentalListComponent {
   }
 
   loadRentals() {
+    this.isLoading = true;
     this.rentalService.getAllRentals().subscribe({
-      next: data => this.rentals = data,
-      error: () => this.notificationService.show('Failed to load rentals')
+      next: (data) => {
+        this.rentals = data;
+        this.isLoading = false;
+      },
+      error: () => {
+        this.isLoading = false;
+        this.notificationService.show('Failed to load rentals');
+      }
     });
   }
 

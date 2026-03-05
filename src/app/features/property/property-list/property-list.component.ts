@@ -19,6 +19,7 @@ export class PropertyListComponent {
   showForm = false;
   editingProperty?: Property;
   @ViewChild(PropertyFormComponent) formComponent?: PropertyFormComponent;
+  isLoading = true;
 
   constructor(private readonly propertyService: PropertyService,
               public authService: AuthService,
@@ -39,9 +40,16 @@ export class PropertyListComponent {
   }
 
   loadProperties() {
+    this.isLoading = true;
     this.propertyService.getAllProperties().subscribe({
-      next: data => this.properties = data,
-      error: () => this.notificationService.show('Failed to load properties')
+      next: (data) => {
+        this.properties = data;
+        this.isLoading = false;
+      },
+      error: () => {
+        this.isLoading = false;
+        this.notificationService.show('Failed to load properties', 'error');
+      }
     });
   }
 

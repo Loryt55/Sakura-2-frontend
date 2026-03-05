@@ -1,5 +1,5 @@
 import {Component, ViewChild} from '@angular/core';
-import { CommonModule } from '@angular/common';
+import {CommonModule} from '@angular/common';
 import {User, UserForm} from '../../../core/models/user.model';
 import {UserService} from '../services/user.service';
 import {UserFormComponent} from '../user-form/user-form.component';
@@ -18,6 +18,7 @@ export class UserListComponent {
   showForm = false;
   editingUser?: User;
   @ViewChild(UserFormComponent) formComponent?: UserFormComponent;
+  isLoading = true;
 
   constructor(private userService: UserService,
               private notificationService: NotificationService) {
@@ -25,9 +26,16 @@ export class UserListComponent {
   }
 
   loadUsers() {
+    this.isLoading = true;
     this.userService.getAllUsers().subscribe({
-      next: data => this.users = data,
-      error: () => this.notificationService.show('Failed to load users')
+      next: (data) => {
+        this.users = data;
+        this.isLoading = false;
+      },
+      error: () => {
+        this.isLoading = false;
+        this.notificationService.show('Failed to load users')
+      }
     });
   }
 
@@ -37,7 +45,7 @@ export class UserListComponent {
   }
 
   edit(user: User) {
-    this.editingUser = { ...user };
+    this.editingUser = {...user};
     this.showForm = true;
   }
 
@@ -48,7 +56,7 @@ export class UserListComponent {
 
   onSave(formData: UserForm) {
     if (this.editingUser) {
-      const { password, ...updateData } = formData; // ← esclude password dall'update
+      const {password, ...updateData} = formData; // ← esclude password dall'update
       this.userService.updateUser(this.editingUser.id, updateData).subscribe({
         next: () => {
           this.loadUsers();
