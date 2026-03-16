@@ -25,21 +25,14 @@ export class LoginComponent {
   }
 
   onSubmit() {
-    this.errorMessage = '';
-
     this.authService.login(this.email, this.password).subscribe({
-      next: user => {
-
-        if (user.roleName === 'ADMIN') {
-          this.router.navigate(['/properties']);
-        } else if (user.roleName === 'OWNER') {
-          this.router.navigate(['/properties']);
+      next: () => this.router.navigate(['/properties']),
+      error: (err) => {
+        if (err.status === 429) {
+          this.errorMessage = 'Too many attempts. Please wait a few minutes.';
         } else {
-          this.router.navigate(['/properties']);
+          this.errorMessage = 'Invalid email or password';
         }
-      },
-      error: () => {
-        this.errorMessage = 'Invalid email or password';
       }
     });
   }
